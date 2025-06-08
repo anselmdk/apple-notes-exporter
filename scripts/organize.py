@@ -53,11 +53,20 @@ def organize_files(target_path):
 
             note_duplicates = notes_count[folder_name][note_name]
             if note_name == file_name:
-                last_path = Path(note_name).stem
+                base_folder = Path(note_name).stem
             else:
-                last_path = note_name
+                base_folder = note_name
+
+            # Only prepend creation_date for folders inside "Notes"
+            if folder_name == "Notes":
+                last_path = f"{creation_date} {base_folder}"
+            else:
+                last_path = base_folder
+
+            # Handle duplicates for all folder names
             if len(note_duplicates) > 1:
                 last_path = f"{last_path}_{creation_date}"
+
             target_dir = Path(folder_name) / last_path
             target_dir.mkdir(parents=True, exist_ok=True)
 

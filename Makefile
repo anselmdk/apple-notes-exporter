@@ -1,4 +1,4 @@
-all: save organize patch_image_paths
+all: clean save organize patch_image_paths
 
 .PHONY: save
 save:
