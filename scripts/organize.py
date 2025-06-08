@@ -33,6 +33,16 @@ def count_notes(files):
     return notes_count
 
 
+def normalize_filename(filename):
+    """Convert filename to a normalized form based on extension."""
+    ext = Path(filename).suffix.lower()
+    if ext == '.html':
+        return 'index.html'
+    elif ext == '.md':
+        return 'README.md'
+    return filename
+
+
 def organize_files(target_path):
     """Organize files into directories based on their name and creation date."""
     os.chdir(target_path)
@@ -70,7 +80,9 @@ def organize_files(target_path):
             target_dir = Path(folder_name) / last_path
             target_dir.mkdir(parents=True, exist_ok=True)
 
-            dest_path = target_dir / file_name
+            # Normalize the filename before moving
+            normalized_filename = normalize_filename(file_name)
+            dest_path = target_dir / normalized_filename
             shutil.move(str(Path(file)), str(dest_path))
             print(f"Moved {file} to {dest_path}")
 
