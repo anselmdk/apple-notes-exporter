@@ -15,4 +15,4 @@ patch_image_paths:
 
 .PHONY: clean
 clean:
-	rm -rf ./notes
+	if [ -d notes ]; then find notes -mindepth 1 -not -path 'notes/.git*' -delete; fi
